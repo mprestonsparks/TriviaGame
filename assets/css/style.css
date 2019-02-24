@@ -1,0 +1,39 @@
+
+body {
+    background-color: lightgray;
+}
+
+.container {
+    padding: 1% 5% 2% 5%;
+}
+
+#col-header {
+    background-color: lightblue;
+    padding: 2% 0 5% 0;
+    text-align: center;
+    /* height: 100%; ** TRYING TO MAKE MAIN COLUMN FILL ENTIRE PAGE
+    top: 0px;
+    bottom: 0; */
+}
+
+#col-timer {
+    background-color: lightgreen;
+    padding: 1% 0 1% 0;
+    text-align: center;
+}
+
+#col-question {
+    background-color: lightcoral;
+    padding: 5% 0 5% 0;
+    text-align: center;
+}
+
+#col-answers {
+    background-color: lightslategray;
+    padding: 2% 0 1% 0;
+    text-align: left;
+}
+
+.row4 {
+    background-color: lightseagreen;
+}
