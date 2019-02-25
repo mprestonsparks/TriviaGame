@@ -1,6 +1,10 @@
 
 // TO DO
 // Randomize the order of the movies in the movies array & change array references in pickRandomMovies() to randomized list
+// Fix the answer column size (bootsrap isn't working), or get rid of "padding" columns and add padding to answer column
+// Randomize the display order of the answers on the page
+// Add the score counter
+// Add the timer
 // --------------------------------------------------------------
 
 // DECLARE VARIABLES
@@ -8,10 +12,11 @@ var movies = ["Cars", "The Notebook", "Mr. Nobody", "The Godfather"]; // Create 
 var correctMovie;
 var incorrectMovieOne;
 var incorrectMovieTwo;
-var questionCategories = ["Actors","Director","Plot","Rated","Released","Runtime","Plot"]; // Categories of questions
+var questionCategories = ["Actors","Director","Plot","Released","Runtime","Plot"]; // Categories of questions
 var questionCategory; // The type of question to be asked (plot, released date, etc.)
-var question;
 var questionGrammarSubject;
+var answer;
+var correctAnswerDiv; // The div holding the correct answer
 // --------------------------------------------------------------
 
 // WRITE FUNCTIONS
@@ -53,9 +58,6 @@ function pickRandomQuestion() {
         case "Director":
             questionGrammarSubject = "Who was the director of ";
             break;
-        case "Rated":
-            questionGrammarSubject = "What was the rating of ";
-            break;
         case "Released":
             questionGrammarSubject = "What was the release date of ";
             break;
@@ -68,7 +70,7 @@ function pickRandomQuestion() {
 }
 
 // Function to pull movie info from OMDB API
-function getMovieInfo() {
+function correctMovieInfo() {
     var queryURL = "https://www.omdbapi.com/?t=" + correctMovie + "&y=&plot=short&apikey=trilogy";
     // Create an AJAX call for the movie selected
     $.ajax({
@@ -79,46 +81,128 @@ function getMovieInfo() {
         var actors = response.Actors;
         var director = response.Director;
         var released = response.Released;
-        var rated = response.Rated;
         var runtime = response.Runtime;
         var plot = response.Plot;
         var imgURL = response.Poster;
         console.log(response);
         switch (String(questionCategory)) {
             case "Actors":
-            question = actors;
-            break;
+                answer = actors;
+                break;
             case "Director":
-            question = director;
-            break;
+                answer = director;
+                break;
             case "Plot":
-            question = plot;
-            break;
-            case "Rated":
-            question = rated;
-            break;
+                answer = plot;
+                break;
             case "Released":
-            question = released;
-            break;
+                answer = released;
+                break;
             case "Runtime":
-            question = runtime;
-            break;
+                answer = runtime;
+                break;
             case "Plot": 
-            question = plot;
+                answer = plot;
         }
-        console.log("question2: " + question);
+        console.log("answer: " + answer);
+        var image = $("<img>").attr("src", imgURL); // Create element to hold the image
+        $("#movieImage").append(image); // Append the image
         $("#questionText").text(questionGrammarSubject + title + "?");
+        // $(correctAnswerDiv).text(answer);
+        var correctAnswerDiv2 = correctAnswerDiv;
+        $(correctAnswerDiv2).text(answer);
+        console.log("text..",correctAnswerDiv);
     });
+}
+
+function incorrectMovieOneInfo() {
+    var queryURL = "https://www.omdbapi.com/?t=" + incorrectMovieOne + "&y=&plot=short&apikey=trilogy";
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        var title = response.Title;
+        var actors = response.Actors;
+        var director = response.Director;
+        var released = response.Released;
+        var runtime = response.Runtime;
+        var plot = response.Plot;
+        switch (String(questionCategory)) {
+            case "Actors":
+                answer = actors;
+                break;
+            case "Director":
+                answer = director;
+                break;
+            case "Plot":
+                answer = plot;
+                break;
+            case "Released":
+                answer = released;
+                break;
+            case "Runtime":
+                answer = runtime;
+                break;
+            case "Plot": 
+                answer = plot;
+        }
+        console.log("incorrectAnswerOne: " + answer);
+        $("#secondAnswerDiv").text(answer);
+    });
+}
+
+function incorrectMovieTwoInfo() {
+    var queryURL = "https://www.omdbapi.com/?t=" + incorrectMovieTwo + "&y=&plot=short&apikey=trilogy";
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        var title = response.Title;
+        var actors = response.Actors;
+        var director = response.Director;
+        var released = response.Released;
+        var runtime = response.Runtime;
+        var plot = response.Plot;
+        switch (String(questionCategory)) {
+            case "Actors":
+                answer = actors;
+                break;
+            case "Director":
+                answer = director;
+                break;
+            case "Plot":
+                answer = plot;
+                break;
+            case "Released":
+                answer = released;
+                break;
+            case "Runtime":
+                answer = runtime;
+                break;
+            case "Plot": 
+                answer = plot;
+        }
+        console.log("incorrectAnswerTwo: " + answer);
+        $("#thirdAnswerDiv").text(answer);
+    });
+}
+
+function callMovieInfoFunctions() {
+    correctMovieInfo();
+    incorrectMovieOneInfo();
+    incorrectMovieTwoInfo();
+}
+
+function randomizeAnswerDivs() {
+    var pickRandom = createRandom(1,3);
+    correctAnswerDiv = '#answerDiv' + pickRandom;
 }
 // --------------------------------------------------------------
 
-// SET VALUE OF VARIABLES
-
-
-
 // CALL FUNCTIONS
 pickRandomMovies();
-getMovieInfo();
+randomizeAnswerDivs();
+callMovieInfoFunctions();
 pickRandomQuestion();
 // --------------------------------------------------------------
 
@@ -126,3 +210,4 @@ console.log("correctMovie: " + correctMovie);
 console.log("incorrectMovieOne: " + incorrectMovieOne);
 console.log("incorrectMovieTwo: " + incorrectMovieTwo);
 console.log("questionCategory: " + questionCategory);
+console.log("randomanswerdiv: " + correctAnswerDiv);
