@@ -2,13 +2,12 @@
 // TO DO
 // Randomize the order of the movies in the movies array & change array references in pickRandomMovies() to randomized list
 // Fix the answer column size (bootsrap isn't working), or get rid of "padding" columns and add padding to answer column
-// Randomize the display order of the answers on the page
 // Add the score counter
 // Add the timer
 // --------------------------------------------------------------
 
 // DECLARE VARIABLES
-var movies = ["Cars", "The Notebook", "Mr. Nobody", "The Godfather"]; // Create array of movies
+var movies = ["The Shawshank Redemption","The Godfather","The Dark Knight","The Godfather: Part II","The Lord of the Rings: The Return of the King","Pulp Fiction","Schindler's List","The Good, the Bad and the Ugly","12 Angry Men","Inception","Fight Club","The Lord of the Rings: The Fellowship of the Ring","Forrest Gump","Star Wars: Episode V","The Lord of the Rings: The Two Towers","The Matrix","Goodfellas","Seven Samurai","Andhadhun","Interstellar","City of God","Spirited Away","Saving Private Ryan","Life Is Beautiful","The Usual Suspects","Se7en","Léon: The Professional","The Silence of the Lambs","Star Wars","It's a Wonderful Life","Dangal","Whiplash","The Prestige","The Departed","The Pianist","Memento","Gladiator","The Green Mile","American History X","The Lion King","Back to the Future","Raiders of the Lost Ark","Apocalypse Now"];
 var correctMovie;
 var incorrectMovieOne;
 var incorrectMovieTwo;
@@ -19,6 +18,8 @@ var answer;
 var correctAnswerDiv; // The div holding the correct answer
 var incorrectAnswer1Div;
 var incorrectAnswer2Div;
+var correctScore = 0;
+var incorrectScore = 0;
 // --------------------------------------------------------------
 
 // WRITE FUNCTIONS
@@ -201,9 +202,38 @@ function randomizeAnswerDivs() {
         answerOrder.push(i);
     }
     correctAnswerDiv = "#answerDiv" + answerOrder[0];
+    correctAnswerButton = "#answerButton" + answerOrder[0];
     incorrectAnswer1Div = "#answerDiv" + answerOrder[1];
+    incorrectAnswer1Button = "#answerButton" + answerOrder[1];
     incorrectAnswer2Div = "#answerDiv" + answerOrder[2];
+    incorrectAnswer2Button = "#answerButton" + answerOrder[2];
 console.log("answerOrder: "+answerOrder)
+}
+
+function answerSelected() { // When an answer is selected
+    // Update the score
+    $(correctAnswerButton).click(function(){
+        correctScore = correctScore + 1;
+        $("#correct-score-display").text(correctScore);
+    });
+    $(incorrectAnswer1Button).click(function(){
+        incorrectScore = incorrectScore + 1;
+        $("#incorrect-score-display").text(incorrectScore);
+    })
+    $(incorrectAnswer2Button).click(function(){
+        incorrectScore = incorrectScore + 1;
+        $("#incorrect-score-display").text(incorrectScore);
+    })
+    // Change the question
+    changeQuestion();
+}
+
+function changeQuestion() {
+    pickRandomMovies();
+    randomizeAnswerDivs();
+    callMovieInfoForFunctions();
+    pickRandomQuestion();
+    answerSelected();
 }
 // --------------------------------------------------------------
 
@@ -212,10 +242,11 @@ pickRandomMovies();
 randomizeAnswerDivs();
 callMovieInfoFunctions();
 pickRandomQuestion();
+answerSelected();
+changeQuestion();
 // --------------------------------------------------------------
 
 console.log("correctMovie: " + correctMovie);
 console.log("incorrectMovieOne: " + incorrectMovieOne);
 console.log("incorrectMovieTwo: " + incorrectMovieTwo);
 console.log("questionCategory: " + questionCategory);
-// console.log("randomanswerdiv: " + correctAnswerDiv);

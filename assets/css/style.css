@@ -18,8 +18,22 @@ body {
 
 #col-timer {
     background-color: lightgreen;
-    padding: 1% 0 1% 0;
-    text-align: center;
+    padding: 1% 2% 1% 0;
+    text-align: right;
+}
+
+.score-section {
+    background-color: lightgoldenrodyellow;
+    padding: 1% 0 0 2%;
+    text-align: left;
+}
+
+#correct-score-display {
+    margin: 0 2% 0 1%;
+}
+
+#incorrect-score-display {
+    margin: 0 0 0 1%;
 }
 
 #col-question {
@@ -34,7 +48,7 @@ body {
 
 #col-answers {
     background-color: lightslategray;
-    padding: 2% 0 1% 0;
+    padding: 2% 2% 1% 2%;
     text-align: left;
 }
 
