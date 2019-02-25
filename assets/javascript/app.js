@@ -17,6 +17,8 @@ var questionCategory; // The type of question to be asked (plot, released date, 
 var questionGrammarSubject;
 var answer;
 var correctAnswerDiv; // The div holding the correct answer
+var incorrectAnswer1Div;
+var incorrectAnswer2Div;
 // --------------------------------------------------------------
 
 // WRITE FUNCTIONS
@@ -108,10 +110,7 @@ function correctMovieInfo() {
         var image = $("<img>").attr("src", imgURL); // Create element to hold the image
         $("#movieImage").append(image); // Append the image
         $("#questionText").text(questionGrammarSubject + title + "?");
-        // $(correctAnswerDiv).text(answer);
-        var correctAnswerDiv2 = correctAnswerDiv;
-        $(correctAnswerDiv2).text(answer);
-        console.log("text..",correctAnswerDiv);
+        $(correctAnswerDiv).text(answer);
     });
 }
 
@@ -147,7 +146,7 @@ function incorrectMovieOneInfo() {
                 answer = plot;
         }
         console.log("incorrectAnswerOne: " + answer);
-        $("#secondAnswerDiv").text(answer);
+        $(incorrectAnswer1Div).text(answer);
     });
 }
 
@@ -183,7 +182,7 @@ function incorrectMovieTwoInfo() {
                 answer = plot;
         }
         console.log("incorrectAnswerTwo: " + answer);
-        $("#thirdAnswerDiv").text(answer);
+        $(incorrectAnswer2Div).text(answer);
     });
 }
 
@@ -194,8 +193,17 @@ function callMovieInfoFunctions() {
 }
 
 function randomizeAnswerDivs() {
-    var pickRandom = createRandom(1,3);
-    correctAnswerDiv = '#answerDiv' + pickRandom;
+    var answerOrder = [] // Create an array to store positions of answers
+    var pickRandom = createRandom(0,2); 
+    answerOrder.push(pickRandom); 
+    for (var i=0; i<=2; i++) {
+        if (answerOrder.indexOf(i) == -1)
+        answerOrder.push(i);
+    }
+    correctAnswerDiv = "#answerDiv" + answerOrder[0];
+    incorrectAnswer1Div = "#answerDiv" + answerOrder[1];
+    incorrectAnswer2Div = "#answerDiv" + answerOrder[2];
+console.log("answerOrder: "+answerOrder)
 }
 // --------------------------------------------------------------
 
@@ -210,4 +218,4 @@ console.log("correctMovie: " + correctMovie);
 console.log("incorrectMovieOne: " + incorrectMovieOne);
 console.log("incorrectMovieTwo: " + incorrectMovieTwo);
 console.log("questionCategory: " + questionCategory);
-console.log("randomanswerdiv: " + correctAnswerDiv);
+// console.log("randomanswerdiv: " + correctAnswerDiv);
