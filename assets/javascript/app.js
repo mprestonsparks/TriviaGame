@@ -5,15 +5,17 @@
 
 // DECLARE VARIABLES
 var movies = ["Cars", "The Notebook", "Mr. Nobody", "The Godfather"]; // Create array of movies
-var questionCategories = ["Actors","Director","Plot","Released","Runtime"]; // Categories of questions
-var questionCategory; // The type of question to be asked (plot, released date, etc.)
 var correctMovie;
 var incorrectMovieOne;
 var incorrectMovieTwo;
+var questionCategories = ["Actors","Director","Plot","Rated","Released","Runtime","Plot"]; // Categories of questions
+var questionCategory; // The type of question to be asked (plot, released date, etc.)
+var question;
+var questionGrammarSubject;
 // --------------------------------------------------------------
 
 // WRITE FUNCTIONS
-// Function to pick a random # (used in the pickRandomMovies function)
+// Function to pick a random # (used in pickRandomMovies and pickRandomQuestion functions)
 function createRandom(min, max) {
     return Math.round(Math.floor(Math.random() * (max - min + 1)) + min);
 }
@@ -38,12 +40,31 @@ function pickRandomMovies() {
         }
     }
 }
-
 // Pick a random category of question
 function pickRandomQuestion() {
     var questionsArrayMin = 0; // First category in questionCategories array
     var questionsArrayMax = questionCategories.length -1; // # of items in questionCategories array
     questionCategory = questionCategories[createRandom(0,4)];
+
+    switch (questionCategory) {
+        case "Actors":
+            questionGrammarSubject = "Who are the actors in ";
+            break;
+        case "Director":
+            questionGrammarSubject = "Who was the director of ";
+            break;
+        case "Rated":
+            questionGrammarSubject = "What was the rating of ";
+            break;
+        case "Released":
+            questionGrammarSubject = "What was the release date of ";
+            break;
+        case "Runtime":
+            questionGrammarSubject = "How long is ";
+            break;
+        case "Plot":
+            questionGrammarSubject = "What is the plot of ";
+    }
 }
 
 // Function to pull movie info from OMDB API
@@ -55,19 +76,50 @@ function getMovieInfo() {
         method: "GET"
     }).then(function (response) {
         var title = response.Title;
+        var actors = response.Actors;
+        var director = response.Director;
         var released = response.Released;
-        var rating = response.Rating;
+        var rated = response.Rated;
+        var runtime = response.Runtime;
         var plot = response.Plot;
         var imgURL = response.Poster;
         console.log(response);
+        switch (String(questionCategory)) {
+            case "Actors":
+            question = actors;
+            break;
+            case "Director":
+            question = director;
+            break;
+            case "Plot":
+            question = plot;
+            break;
+            case "Rated":
+            question = rated;
+            break;
+            case "Released":
+            question = released;
+            break;
+            case "Runtime":
+            question = runtime;
+            break;
+            case "Plot": 
+            question = plot;
+        }
+        console.log("question2: " + question);
+        $("#questionText").text(questionGrammarSubject + title + "?");
     });
 }
 // --------------------------------------------------------------
 
+// SET VALUE OF VARIABLES
+
+
+
 // CALL FUNCTIONS
 pickRandomMovies();
-pickRandomQuestion();
 getMovieInfo();
+pickRandomQuestion();
 // --------------------------------------------------------------
 
 console.log("correctMovie: " + correctMovie);
