@@ -215,20 +215,24 @@ function answerSelected() { // When an answer is selected
     $(correctAnswerButton).click(function(){
         correctScore = correctScore + 1;
         $("#correct-score-display").text(correctScore);
+        changeQuestion();
     });
     $(incorrectAnswer1Button).click(function(){
         incorrectScore = incorrectScore + 1;
         $("#incorrect-score-display").text(incorrectScore);
+        changeQuestion();
     })
     $(incorrectAnswer2Button).click(function(){
         incorrectScore = incorrectScore + 1;
         $("#incorrect-score-display").text(incorrectScore);
+        changeQuestion();
     })
     // Change the question
     changeQuestion();
 }
 
 function changeQuestion() {
+    debugger;
     pickRandomMovies();
     randomizeAnswerDivs();
     callMovieInfoForFunctions();
