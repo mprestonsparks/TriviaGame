@@ -2,7 +2,6 @@
 // TO DO
 // Randomize the order of the movies in the movies array & change array references in pickRandomMovies() to randomized list
 // Fix the answer column size (bootsrap isn't working), or get rid of "padding" columns and add padding to answer column
-// Add the score counter
 // Add the timer
 // --------------------------------------------------------------
 
@@ -108,8 +107,9 @@ function correctMovieInfo() {
                 answer = plot;
         }
         console.log("answer: " + answer);
+        $("#movieImage").empty();
         var image = $("<img>").attr("src", imgURL); // Create element to hold the image
-        $("#movieImage").append(image); // Append the image
+        $("#movieImage").append(image); // Replace the image
         $("#questionText").text(questionGrammarSubject + title + "?");
         $(correctAnswerDiv).text(answer);
     });
@@ -210,7 +210,11 @@ function randomizeAnswerDivs() {
 console.log("answerOrder: "+answerOrder)
 }
 
-function answerSelected() { // When an answer is selected
+$("button").click(function() { // When a button is clicked, change the question
+    changeQuestion();
+    })
+
+function checkAnswer() { // When an answer is selected
     // Update the score
     $(correctAnswerButton).click(function(){
         correctScore = correctScore + 1;
@@ -224,26 +228,23 @@ function answerSelected() { // When an answer is selected
         incorrectScore = incorrectScore + 1;
         $("#incorrect-score-display").text(incorrectScore);
     })
-    // Change the question
-    changeQuestion();
 }
 
 function changeQuestion() {
     pickRandomMovies();
-    randomizeAnswerDivs();
-    callMovieInfoForFunctions();
+    callMovieInfoFunctions();
     pickRandomQuestion();
-    answerSelected();
-}
+    randomizeAnswerDivs();
+    }
 // --------------------------------------------------------------
 
 // CALL FUNCTIONS
 pickRandomMovies();
-randomizeAnswerDivs();
-callMovieInfoFunctions();
 pickRandomQuestion();
-answerSelected();
-changeQuestion();
+callMovieInfoFunctions();
+randomizeAnswerDivs();
+checkAnswer();
+// changeQuestion();
 // --------------------------------------------------------------
 
 console.log("correctMovie: " + correctMovie);
