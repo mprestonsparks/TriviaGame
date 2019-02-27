@@ -42,7 +42,7 @@
         <div class="col md-10" id="col-answers"> <!-- COL 2 -->
             <div class="row">
                 <div class="col md-2">
-                    <button type="button" class="btn btn-dark" id="answerButton0">A </button>
+                    <button type="button" class="btn btn-dark answerButtons" id="answerButton0">A </button>
                 </div>
                 <div class="col md-10">
                     <p id="answerDiv0">Sorry, the answer didn't load.</p>
@@ -50,7 +50,7 @@
             </div>
             <div class="row">
                 <div class="col md-2">
-                    <button type="button" class="btn btn-dark" id="answerButton1">B </button>
+                    <button type="button" class="btn btn-dark answerButtons" id="answerButton1">B </button>
                 </div>
                 <div class="col md-10">
                     <p id="answerDiv1">Sorry, the answer didn't load.</p>
@@ -58,7 +58,7 @@
             </div>
             <div class="row">
                 <div class="col md-2">
-                    <button type="button" class="btn btn-dark" id="answerButton2">C </button>
+                    <button type="button" class="btn btn-dark answerButtons" id="answerButton2">C </button>
                 </div>
                 <div class="col md-10">
                     <p id="answerDiv2">Sorry, the answer didn't load.</p>
@@ -68,6 +68,25 @@
         <div class="col md-1"> </div> <!-- COL 3 -->
     </div> <!-- END ROW 4 -->
 </div> <!-- END CONTAINER -->
+<!-- MODAL TO DISPLAY MESSAGES AFTER ANSWER IS SELECTED -->
+<div class="modal" id="modal1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">This is the modal title</h2>
+                <button type="button" class="close"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-display-answer"></div>
+                <p>This is the modal body</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary">New Game</button>
+                <button type="button" class="btn btn-secondary">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="assets/javascript/app.js"></script>     
 </body>
 </html>

@@ -2,7 +2,7 @@
 // TO DO
 // Randomize the order of the movies in the movies array & change array references in pickRandomMovies() to randomized list
 // Fix the answer column size (bootsrap isn't working), or get rid of "padding" columns and add padding to answer column
-// Add the timer
+// Fix the buttons on the modal-- see https://www.youtube.com/watch?v=MLtAMg9_Svw
 // --------------------------------------------------------------
 
 // DECLARE VARIABLES
@@ -14,6 +14,7 @@ var questionCategories = ["Actors","Director","Plot","Released","Runtime","Plot"
 var questionCategory; // The type of question to be asked (plot, released date, etc.)
 var questionGrammarSubject;
 var answer;
+var correctAnswer;
 var correctAnswerDiv; // The div holding the correct answer
 var incorrectAnswer1Div;
 var incorrectAnswer2Div;
@@ -112,6 +113,7 @@ function correctMovieInfo() {
         $("#movieImage").append(image); // Replace the image
         $("#questionText").text(questionGrammarSubject + title + "?");
         $(correctAnswerDiv).text(answer);
+        correctAnswer = answer;
     });
 }
 
@@ -187,7 +189,7 @@ function incorrectMovieTwoInfo() {
     });
 }
 
-function callMovieInfoFunctions() {
+function newAJAXRequest() {
     correctMovieInfo();
     incorrectMovieOneInfo();
     incorrectMovieTwoInfo();
@@ -210,7 +212,7 @@ function randomizeAnswerDivs() {
 console.log("answerOrder: "+answerOrder)
 }
 
-$("button").click(function() { // When a button is clicked, change the question
+$(".answerButtons").click(function() { // When an answer button is clicked, change the question
     changeQuestion();
     })
 
@@ -235,14 +237,14 @@ function checkAnswer() { // When an answer is selected
 
 function changeQuestion() {
     pickRandomMovies();
-    callMovieInfoFunctions();
+    newAJAXRequest();
     pickRandomQuestion();
     randomizeAnswerDivs();
     }
 
 
 var counter = 0;
-var timeLimit = 11;
+var timeLimit = 5;
 
 function convertSeconds(s) {
     var min = Math.floor(s/60);
@@ -253,25 +255,43 @@ function convertSeconds(s) {
     return min + ":" + sec;
 }
 
-function setup () {
+function startTimer () {
     $("#timer-display").text(convertSeconds(timeLimit));
-    function timeIt () {
+    function counting () {
         counter++;
-        $("#timer-display").text(convertSeconds(timeLimit - counter));
+        var timeLeft = timeLimit - counter;
+        $("#timer-display").text(convertSeconds(timeLeft));
+        if (timeLeft === 0) {
+            timesUp();
+        }
     }
-    setInterval(timeIt, 1000);
+    setInterval(counting, 1000);
 }
 
+// Actions to take if question's time limit expires
+function timesUp() {
+    $(".modal-title").text("You ran out of time!");  // **** DOESNT WORK FIX IT https://getbootstrap.com/docs/4.0/components/modal/ *****
+    $("#modal-body").text("The correct answer was... ");
+    $("#modal-body").text(correctAnswer);
+    showModal();
+    incorrectScore ++;
+}
+
+function showModal() {
+    // Write whether answer was correct or not
+    // If answer was incorrect, display correct answer
+    $("#modal1").modal("show"); // Displays the modal
+}
 
 // --------------------------------------------------------------
 
 // CALL FUNCTIONS
 pickRandomMovies();
 pickRandomQuestion();
-callMovieInfoFunctions();
+newAJAXRequest();
 randomizeAnswerDivs();
 checkAnswer();
-setup();
+startTimer();
 // --------------------------------------------------------------
 
 console.log("correctMovie: " + correctMovie);
