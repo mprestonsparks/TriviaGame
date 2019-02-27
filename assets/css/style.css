@@ -22,6 +22,10 @@ body {
     text-align: right;
 }
 
+#timer-display {
+    text-align: left;
+}
+
 .score-section {
     background-color: lightgoldenrodyellow;
     padding: 1% 0 0 2%;

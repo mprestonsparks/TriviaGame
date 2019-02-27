@@ -234,12 +234,35 @@ function checkAnswer() { // When an answer is selected
 }
 
 function changeQuestion() {
-    debugger;
     pickRandomMovies();
     callMovieInfoFunctions();
     pickRandomQuestion();
     randomizeAnswerDivs();
     }
+
+
+var counter = 0;
+var timeLimit = 11;
+
+function convertSeconds(s) {
+    var min = Math.floor(s/60);
+    var sec = s%60;
+        if (sec<10) {
+            return min + ":0" + sec;
+        }    
+    return min + ":" + sec;
+}
+
+function setup () {
+    $("#timer-display").text(convertSeconds(timeLimit));
+    function timeIt () {
+        counter++;
+        $("#timer-display").text(convertSeconds(timeLimit - counter));
+    }
+    setInterval(timeIt, 1000);
+}
+
+
 // --------------------------------------------------------------
 
 // CALL FUNCTIONS
@@ -248,7 +271,7 @@ pickRandomQuestion();
 callMovieInfoFunctions();
 randomizeAnswerDivs();
 checkAnswer();
-// changeQuestion();
+setup();
 // --------------------------------------------------------------
 
 console.log("correctMovie: " + correctMovie);
