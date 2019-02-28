@@ -20,8 +20,8 @@
     <div class="row"> <!-- ROW 2-->
         <div class="col md-6" id="col-timer"> <!-- COL 1 -->
             <div class="row">
-                <div class="col-md-10">Time Remaining:</div>
-                <div class="col-md-2" id="timer-display"></div>
+                <div class="col-md-9">Time Remaining:</div>
+                <div class="col-md-3" id="timer-display"></div>
             </div>
         </div> <!-- END COL 2 -->
         <div class="col md-6 score-section"> <!-- COL 2 -->
@@ -68,25 +68,68 @@
         <div class="col md-1"> </div> <!-- COL 3 -->
     </div> <!-- END ROW 4 -->
 </div> <!-- END CONTAINER -->
-<!-- MODAL TO DISPLAY MESSAGES AFTER ANSWER IS SELECTED -->
-<div class="modal" id="modal1">
+<!-- MODAL TO DISPLAY AT BEGINNING OF NEW GAME -->
+<div class="modal" id="new-game-modal" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="new-game-modal-title">Welcome to Movie Trivia!</h2>
+                    <button type="button" class="close modal-buttons" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body" id="new-game-display-text"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-buttons" id="new-game-button" data-dismiss="modal">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- MODAL TO DISPLAY MESSAGES AFTER TIME TO ANSWER EXPIRES-->
+<div class="modal" id="timesup-modal" data-toggle="modal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">This is the modal title</h2>
-                <button type="button" class="close"><span>&times;</span></button>
+                <h2 class="modal-title" id="timesup-modal-title">This is the modal title</h2>
+                <button type="button" class="close modal-buttons" data-dismiss="modal"><span>&times;</span></button>
             </div>
-            <div class="modal-body">
-                <div id="modal-display-answer"></div>
-                <p>This is the modal body</p>
-            </div>
+            <div class="modal-body" id="timesup-display-text"></div>
+            <div class="modal-body" id="timesup-display-answer"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary">New Game</button>
-                <button type="button" class="btn btn-secondary">Continue</button>
+                <button type="button" class="btn btn-secondary modal-buttons" data-dismiss="modal">Continue</button>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal" id="correct-answer-modal" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="correct-answer-modal-title">This is the modal title</h2>
+                    <button type="button" class="close modal-buttons" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body" id="correct-answer-display-text"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-buttons" data-dismiss="modal">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="incorrect-answer-modal" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="incorrect-answer-modal-title">This is the modal title</h2>
+                        <button type="button" class="close modal-buttons" data-dismiss="modal"><span>&times;</span></button>
+                    </div>
+                    <div class="modal-body" id="incorrect-answer-display-text"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary modal-buttons" data-dismiss="modal">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 <script src="assets/javascript/app.js"></script>     
 </body>
 </html>
