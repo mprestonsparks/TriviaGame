@@ -24,8 +24,11 @@ var correctAnswer;
 var incorrectAnswerOne;
 var incorrectAnswerTwo;
 var correctAnswerDiv; // The div holding the correct answer
+var correctAnswerButton;
 var incorrectAnswer1Div;
+var incorrectAnswer1Button;
 var incorrectAnswer2Div;
+var incorrectAnswer2Button;
 var correctScore = 0;
 var incorrectScore = 0;
 // --------------------------------------------------------------
@@ -41,7 +44,7 @@ function initializeNewGame() {
     pickRandomQuestion();
     newAJAXRequest();
     randomizeAnswerDivs();
-    checkAnswer();
+    // checkAnswer();
     startTimer();
 }
 // Pick a random movie from the movies array
@@ -66,10 +69,7 @@ function pickRandomMovies() {
 }
 // Pick a random category of question
 function pickRandomQuestion() {
-    var questionsArrayMin = 0; // First category in questionCategories array
-    var questionsArrayMax = questionCategories.length - 1; // # of items in questionCategories array
-    questionCategory = questionCategories[createRandom(0, 4)];
-
+    questionCategory = questionCategories[createRandom(0, 5)];
     switch (questionCategory) {
         case "Actors":
             questionGrammarSubject = "Who are the actors in ";
@@ -211,7 +211,6 @@ console.log("correct", correctAnswer);
 console.log("incorrect1", incorrectAnswerOne);
 var answerOrder=[];
 function randomizeAnswerDivs() {
-    // var answerOrder = [] // Create an array to set random positions of answers
     answerOrder.length = 0;
     var pickRandom = createRandom(0, 2);
     answerOrder.push(pickRandom); // Pick one random number as the first position in answerOrder[]
@@ -237,26 +236,26 @@ $(".modal-buttons").click(function() {
     console.log("incorrectAnswer2Div",incorrectAnswer2Div);
 })
 
-function checkAnswer() { // When an answer is selected..
-    $(correctAnswerButton).click(function () {
+
+ console.log('correctAnswerButton :', correctAnswerButton);
+
+
+ $(".answerButtons").on("click", function(){
+    var userGuess = $(this).text();
+    var correctGuess = $(correctAnswerButton).text();
+    if (userGuess === correctGuess) {
+        console.log("&^&^&^& CORRECT ANSWER SELECTED");
         displayCorrectAnswerModal();
         correctScore = correctScore + 1; // Update score
         $("#correct-score-display").text(correctScore); // Push score to HTML
-        changeQuestion(); // Change question *** CIRCULAR REFERENCE TO CHANGE QUESTION OR ELSE THIS DOESNT RUN
-    });
-    $(incorrectAnswer1Button).click(function () {
+        changeQuestion(); 
+    } else {
         displayIncorrectAnswerModal();
         incorrectScore = incorrectScore + 1;
         $("#incorrect-score-display").text(incorrectScore);
         changeQuestion();
-    });
-    $(incorrectAnswer2Button).click(function () {
-        displayIncorrectAnswerModal();
-        incorrectScore = incorrectScore + 1;
-        $("#incorrect-score-display").text(incorrectScore);
-        changeQuestion();
-    });
-}
+        }
+  })
 
 function newAJAXRequest() {
     correctMovieInfo();
@@ -273,7 +272,7 @@ function changeQuestion() {
 
 // ********** COUNTER FUNCTIONS **********
 var counter = 0;
-var timeLimit = 10;
+var timeLimit = 25;
 
 function convertSeconds(s) {
     var min = Math.floor(s / 60);
