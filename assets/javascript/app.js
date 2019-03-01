@@ -16,8 +16,8 @@ var movies = ["The Shawshank Redemption", "The Godfather", "The Dark Knight", "T
 var correctMovie;
 var incorrectMovieOne;
 var incorrectMovieTwo;
-var questionCategories = ["Actors", "Director", "Plot", "Released", "Runtime", "Plot"]; // Categories of questions
-var questionCategory; // The type of question to be asked (plot, released date, etc.)
+var questionCategories = ["Actors", "Director", "Production", "Rated", "Released", "Runtime"]; // Categories of questions
+var questionCategory; // The type of question to be asked (produced by, released date, etc.)
 var questionGrammarSubject;
 var answer; // 
 var correctAnswer;
@@ -42,6 +42,7 @@ function initializeNewGame() {
     newAJAXRequest();
     randomizeAnswerDivs();
     checkAnswer();
+    startTimer();
 }
 // Pick a random movie from the movies array
 function pickRandomMovies() {
@@ -82,8 +83,11 @@ function pickRandomQuestion() {
         case "Runtime":
             questionGrammarSubject = "How long is ";
             break;
-        case "Plot":
-            questionGrammarSubject = "What is the plot of ";
+        case "Production":
+            questionGrammarSubject = "Which company produced ";
+            break;
+        case "Rated":
+            questionGrammarSubject = "What is the rating of ";
     }
 }
 
@@ -98,9 +102,10 @@ function correctMovieInfo() {
         var title = response.Title;
         var actors = response.Actors;
         var director = response.Director;
+        var rated = response.Rated
         var released = response.Released;
         var runtime = response.Runtime;
-        var plot = response.Plot;
+        var production = response.Production;
         var imgURL = response.Poster;
         switch (String(questionCategory)) {
             case "Actors":
@@ -109,24 +114,23 @@ function correctMovieInfo() {
             case "Director":
                 correctAnswer = director;
                 break;
-            case "Plot":
-                correctAnswer = plot;
+            case "Production":
+                correctAnswer = production;
                 break;
+            case "Rated":
+                correctAnswer = rated;
             case "Released":
                 correctAnswer = released;
                 break;
             case "Runtime":
                 correctAnswer = runtime;
-                break;
-            case "Plot":
-                correctAnswer = plot;
         }
         $("#movieImage").empty();
         var image = $("<img>").attr("src", imgURL); // Create element to hold the image
         $("#movieImage").append(image); // Replace the image
         $("#questionText").text(questionGrammarSubject + title + "?");
         $(correctAnswerDiv).text(correctAnswer);
-        // correctAnswer = answer;
+        console.log(response);
     });
 }
 
@@ -139,9 +143,10 @@ function incorrectMovieOneInfo() {
         var title = response.Title;
         var actors = response.Actors;
         var director = response.Director;
+        var rated = response.Rated
         var released = response.Released;
         var runtime = response.Runtime;
-        var plot = response.Plot;
+        var production = response.Production;
         switch (String(questionCategory)) {
             case "Actors":
                 incorrectAnswerOne = actors;
@@ -149,17 +154,17 @@ function incorrectMovieOneInfo() {
             case "Director":
                 incorrectAnswerOne = director;
                 break;
-            case "Plot":
-                incorrectAnswerOne = plot;
+            case "Production":
+                incorrectAnswerOne = production;
+                break;
+            case "Rated":
+                incorrectAnswerOne = rated;
                 break;
             case "Released":
                 incorrectAnswerOne = released;
                 break;
             case "Runtime":
                 incorrectAnswerOne = runtime;
-                break;
-            case "Plot":
-                incorrectAnswerOne = plot;
         }
         $(incorrectAnswer1Div).text(incorrectAnswerOne);
     });
@@ -174,9 +179,10 @@ function incorrectMovieTwoInfo() {
         var title = response.Title;
         var actors = response.Actors;
         var director = response.Director;
+        var rated = response.Rated
         var released = response.Released;
         var runtime = response.Runtime;
-        var plot = response.Plot;
+        var production = response.Production;
         switch (String(questionCategory)) {
             case "Actors":
                 incorrectAnswerTwo = actors;
@@ -184,17 +190,17 @@ function incorrectMovieTwoInfo() {
             case "Director":
                 incorrectAnswerTwo = director;
                 break;
-            case "Plot":
-                incorrectAnswerTwo = plot;
+            case "Production":
+                incorrectAnswerTwo = production;
+                break;
+            case "Rated":
+                incorrectAnswerTwo = rated;
                 break;
             case "Released":
                 incorrectAnswerTwo = released;
                 break;
             case "Runtime":
                 incorrectAnswerTwo = runtime;
-                break;
-            case "Plot":
-                incorrectAnswerTwo = plot;
         }
         $(incorrectAnswer2Div).text(incorrectAnswerTwo);
     });
@@ -262,8 +268,6 @@ function changeQuestion() {
     pickRandomMovies();
     pickRandomQuestion();
     newAJAXRequest();
-    // answerOrder=[];
-    // checkAnswer();
     randomizeAnswerDivs();
 }
 
@@ -318,8 +322,7 @@ function newGameModal() {
 // Modal to display if time runs out
 function showTimesUp() {
     $("#timesup-modal-title").text("You ran out of time!");
-    $("#timesup-display-text").text("The correct answer was...");
-    $("#timesup-display-answer").text(correctAnswer);
+    $("#timesup-display-text").text("You got " + correctScore + " questions right and " + incorrectScore + " wrong.");
     $("#timesup-modal").modal("show"); // Displays the modal
     incorrectScore = incorrectScore + 1;
     $("#incorrect-score-display").text(incorrectScore);
