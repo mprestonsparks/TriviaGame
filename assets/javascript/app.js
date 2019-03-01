@@ -272,7 +272,7 @@ function changeQuestion() {
 
 // ********** COUNTER FUNCTIONS **********
 var counter = 0;
-var timeLimit = 25;
+var timeLimit = 60;
 
 function convertSeconds(s) {
     var min = Math.floor(s / 60);
