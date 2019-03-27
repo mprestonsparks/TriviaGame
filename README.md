@@ -9,7 +9,7 @@
 &nbsp; User is given a set amount 
 of time to answer as many questions as possible, scoring
 points by guessing the correct answer.  </br>
-&nbsp; The question categories, as well as the movie in question, are randomly generated </br>
+&nbsp; The question categories, as well as the movie in question, are randomly generated </br></br>
 
 **Technology Used** </br>
 &nbsp; HTML, CSS, JavaScript, jQuery, AJAX </br>
